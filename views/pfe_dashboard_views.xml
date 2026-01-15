@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ==================== DASHBOARD ACTION ==================== -->
+    
+    <record id="action_pfe_dashboard" model="ir.actions.act_window">
+        <field name="name">Dashboard Performance</field>
+        <field name="res_model">pfe.project</field>
+        <field name="view_mode">kanban,tree,graph,pivot,calendar</field>
+        <field name="search_view_id" ref="view_pfe_project_search"/>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Bienvenue sur le Dashboard Performance PFE!
+            </p>
+            <p>
+                Créez votre premier projet pour commencer à suivre les performances.
+            </p>
+        </field>
+    </record>
+
+    <!-- Dashboard Overview - Projects with alerts -->
+    <record id="action_pfe_projects_alerts" model="ir.actions.act_window">
+        <field name="name">Projets en Alerte</field>
+        <field name="res_model">pfe.project</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="domain">['|', ('is_delayed', '=', True), ('is_budget_exceeded', '=', True)]</field>
+        <field name="context">{'search_default_in_progress': 1}</field>
+    </record>
+
+    <!-- Dashboard - My Tasks -->
+    <record id="action_pfe_my_tasks" model="ir.actions.act_window">
+        <field name="name">Mes Tâches</field>
+        <field name="res_model">pfe.task</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="domain">[('user_id', '=', uid), ('state', 'not in', ['done', 'cancelled'])]</field>
+    </record>
+
+    <!-- Dashboard - Critical Tasks -->
+    <record id="action_pfe_critical_tasks" model="ir.actions.act_window">
+        <field name="name">Tâches Critiques</field>
+        <field name="res_model">pfe.task</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="domain">[('is_critical', '=', True), ('state', 'not in', ['done', 'cancelled'])]</field>
+    </record>
+
+    <!-- Dashboard - KPIs en Danger -->
+    <record id="action_pfe_kpi_danger" model="ir.actions.act_window">
+        <field name="name">KPIs en Danger</field>
+        <field name="res_model">pfe.kpi</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="domain">[('status', 'in', ['warning', 'danger'])]</field>
+    </record>
+
+    <!-- Dashboard - Milestones -->
+    <record id="action_pfe_milestone" model="ir.actions.act_window">
+        <field name="name">Jalons</field>
+        <field name="res_model">pfe.milestone</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Milestone Tree View -->
+    <record id="view_pfe_milestone_tree" model="ir.ui.view">
+        <field name="name">pfe.milestone.tree</field>
+        <field name="model">pfe.milestone</field>
+        <field name="arch" type="xml">
+            <tree string="Jalons" decoration-danger="is_overdue" decoration-success="state == 'achieved'">
+                <field name="name"/>
+                <field name="project_id"/>
+                <field name="date_target"/>
+                <field name="date_achieved"/>
+                <field name="state" widget="badge" 
+                       decoration-success="state == 'achieved'"
+                       decoration-danger="state == 'missed'"
+                       decoration-info="state == 'pending'"/>
+                <field name="is_overdue" column_invisible="True"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Milestone Form View -->
+    <record id="view_pfe_milestone_form" model="ir.ui.view">
+        <field name="name">pfe.milestone.form</field>
+        <field name="model">pfe.milestone</field>
+        <field name="arch" type="xml">
+            <form string="Jalon">
+                <sheet>
+                    <field name="is_overdue" invisible="1"/>
+                    <widget name="web_ribbon" title="En retard!" bg_color="bg-danger" 
+                            invisible="not is_overdue"/>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="project_id"/>
+                        </group>
+                        <group>
+                            <field name="date_target"/>
+                            <field name="date_achieved"/>
+                            <field name="state"/>
+                        </group>
+                    </group>
+                    <group string="Tâches associées">
+                        <field name="task_ids" nolabel="1">
+                            <tree>
+                                <field name="name"/>
+                                <field name="user_id"/>
+                                <field name="state" widget="badge"/>
+                                <field name="progress" widget="progressbar"/>
+                            </tree>
+                        </field>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Timesheet Tree View -->
+    <record id="view_pfe_timesheet_tree" model="ir.ui.view">
+        <field name="name">pfe.timesheet.tree</field>
+        <field name="model">pfe.timesheet</field>
+        <field name="arch" type="xml">
+            <tree string="Feuilles de temps" editable="bottom">
+                <field name="date"/>
+                <field name="project_id"/>
+                <field name="task_id" domain="[('project_id', '=', project_id)]"/>
+                <field name="user_id"/>
+                <field name="hours" sum="Total Heures"/>
+                <field name="description"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Timesheet Action -->
+    <record id="action_pfe_timesheet" model="ir.actions.act_window">
+        <field name="name">Feuilles de Temps</field>
+        <field name="res_model">pfe.timesheet</field>
+        <field name="view_mode">tree</field>
+        <field name="domain">[('user_id', '=', uid)]</field>
+    </record>
+
+    <!-- Budget Report Action -->
+    <record id="action_pfe_budget_report" model="ir.actions.act_window">
+        <field name="name">Rapport Budget</field>
+        <field name="res_model">pfe.budget.report</field>
+        <field name="view_mode">pivot,graph</field>
+    </record>
+
+    <!-- Budget Report Views -->
+    <record id="view_pfe_budget_report_pivot" model="ir.ui.view">
+        <field name="name">pfe.budget.report.pivot</field>
+        <field name="model">pfe.budget.report</field>
+        <field name="arch" type="xml">
+            <pivot string="Rapport Budget">
+                <field name="project_name" type="row"/>
+                <field name="category" type="col"/>
+                <field name="total_planned" type="measure"/>
+                <field name="total_spent" type="measure"/>
+                <field name="total_remaining" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_pfe_budget_report_graph" model="ir.ui.view">
+        <field name="name">pfe.budget.report.graph</field>
+        <field name="model">pfe.budget.report</field>
+        <field name="arch" type="xml">
+            <graph string="Rapport Budget" type="bar">
+                <field name="category" type="row"/>
+                <field name="total_spent" type="measure"/>
+                <field name="total_planned" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+</odoo>

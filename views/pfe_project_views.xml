@@ -1,0 +1,508 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ==================== PFE PROJECT VIEWS ==================== -->
+    
+    <!-- Form View -->
+    <record id="view_pfe_project_form" model="ir.ui.view">
+        <field name="name">pfe.project.form</field>
+        <field name="model">pfe.project</field>
+        <field name="arch" type="xml">
+            <form string="Projet PFE">
+                <header>
+                    <button name="action_start_planning" string="Planification" type="object" 
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_start_development" string="Développement" type="object" 
+                            class="btn-primary" invisible="state != 'planning'"/>
+                    <button name="action_start_testing" string="Test" type="object" 
+                            class="btn-primary" invisible="state != 'development'"/>
+                    <button name="action_start_delivery" string="Livraison" type="object" 
+                            class="btn-primary" invisible="state != 'testing'"/>
+                    <button name="action_done" string="Terminer" type="object" 
+                            class="btn-success" invisible="state != 'delivery'"/>
+                    <button name="action_cancel" string="Annuler" type="object" 
+                            class="btn-danger" invisible="state in ('done', 'cancelled')"/>
+                    <field name="state" widget="statusbar" 
+                           statusbar_visible="draft,planning,development,testing,delivery,done"/>
+                </header>
+                <sheet>
+                    <field name="is_delayed" invisible="1"/>
+                    <field name="is_budget_exceeded" invisible="1"/>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_tasks" type="object" class="oe_stat_button" icon="fa-tasks">
+                            <field name="task_count" widget="statinfo" string="Tâches"/>
+                        </button>
+                        <button name="action_view_milestones" type="object" class="oe_stat_button" icon="fa-flag">
+                            <field name="milestone_count" widget="statinfo" string="Jalons"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="En Retard" bg_color="bg-danger" 
+                            invisible="not is_delayed"/>
+                    <widget name="web_ribbon" title="Budget Dépassé" bg_color="bg-warning" 
+                            invisible="not is_budget_exceeded"/>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Nom du projet"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="code"/>
+                            <field name="manager_id"/>
+                            <field name="department_id"/>
+                            <field name="partner_id"/>
+                            <field name="priority" widget="priority"/>
+                        </group>
+                        <group>
+                            <field name="date_start"/>
+                            <field name="date_end"/>
+                            <field name="date_end_actual"/>
+                        </group>
+                    </group>
+                    <group string="Budget">
+                        <group>
+                            <field name="budget_allocated"/>
+                            <field name="budget_consumed"/>
+                            <field name="budget_remaining"/>
+                        </group>
+                        <group>
+                            <field name="budget_percentage" widget="progressbar"/>
+                        </group>
+                    </group>
+                    <group string="Avancement">
+                        <field name="progress" widget="progressbar"/>
+                    </group>
+                    <notebook>
+                        <page string="Description" name="description">
+                            <field name="description"/>
+                        </page>
+                        <page string="Équipe" name="team">
+                            <field name="team_ids" widget="many2many_tags"/>
+                        </page>
+                        <page string="Tâches" name="tasks">
+                            <field name="task_ids">
+                                <tree editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="user_id"/>
+                                    <field name="date_deadline"/>
+                                    <field name="state"/>
+                                    <field name="progress" widget="progressbar"/>
+                                    <field name="priority" widget="priority"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Jalons" name="milestones">
+                            <field name="milestone_ids">
+                                <tree editable="bottom">
+                                    <field name="name"/>
+                                    <field name="date_target"/>
+                                    <field name="date_achieved"/>
+                                    <field name="state"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Budget Détaillé" name="budget">
+                            <field name="budget_line_ids">
+                                <tree editable="bottom">
+                                    <field name="name"/>
+                                    <field name="category"/>
+                                    <field name="amount_planned"/>
+                                    <field name="amount_spent"/>
+                                    <field name="amount_remaining"/>
+                                    <field name="date"/>
+                                    <field name="user_id"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="KPIs" name="kpis">
+                            <field name="kpi_ids">
+                                <tree editable="bottom">
+                                    <field name="name"/>
+                                    <field name="kpi_type"/>
+                                    <field name="calculation_method"/>
+                                    <field name="target_value"/>
+                                    <field name="current_value"/>
+                                    <field name="unit"/>
+                                    <field name="status" widget="badge" 
+                                           decoration-success="status == 'good'"
+                                           decoration-warning="status == 'warning'"
+                                           decoration-danger="status == 'danger'"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="view_pfe_project_tree" model="ir.ui.view">
+        <field name="name">pfe.project.tree</field>
+        <field name="model">pfe.project</field>
+        <field name="arch" type="xml">
+            <tree string="Projets PFE" decoration-danger="is_delayed or is_budget_exceeded" 
+                  decoration-success="state == 'done'" decoration-muted="state == 'cancelled'">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="manager_id"/>
+                <field name="department_id" optional="show"/>
+                <field name="date_start"/>
+                <field name="date_end"/>
+                <field name="budget_allocated" sum="Total Budget"/>
+                <field name="budget_consumed" sum="Total Consommé"/>
+                <field name="progress" widget="progressbar"/>
+                <field name="state" widget="badge" 
+                       decoration-success="state == 'done'"
+                       decoration-info="state in ('planning', 'development')"
+                       decoration-warning="state == 'testing'"
+                       decoration-primary="state == 'delivery'"
+                       decoration-danger="state == 'cancelled'"/>
+                <field name="priority" widget="priority"/>
+                <field name="is_delayed" column_invisible="True"/>
+                <field name="is_budget_exceeded" column_invisible="True"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Kanban View -->
+    <record id="view_pfe_project_kanban" model="ir.ui.view">
+        <field name="name">pfe.project.kanban</field>
+        <field name="model">pfe.project</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" class="o_kanban_small_column">
+                <field name="name"/>
+                <field name="manager_id"/>
+                <field name="progress"/>
+                <field name="budget_percentage"/>
+                <field name="state"/>
+                <field name="priority"/>
+                <field name="color"/>
+                <field name="is_delayed"/>
+                <field name="is_budget_exceeded"/>
+                <field name="task_count"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="#{!selection_mode ? kanban_color(record.color.raw_value) : ''} oe_kanban_global_click">
+                            <div class="oe_kanban_content">
+                                <div class="o_kanban_record_top">
+                                    <div class="o_kanban_record_headings">
+                                        <strong class="o_kanban_record_title">
+                                            <field name="name"/>
+                                        </strong>
+                                    </div>
+                                    <field name="priority" widget="priority"/>
+                                </div>
+                                <div class="o_kanban_record_body">
+                                    <div t-if="record.is_delayed.raw_value" class="text-danger">
+                                        <i class="fa fa-warning"/> En retard
+                                    </div>
+                                    <div t-if="record.is_budget_exceeded.raw_value" class="text-warning">
+                                        <i class="fa fa-warning"/> Budget dépassé
+                                    </div>
+                                    <div class="mt-2">
+                                        <span class="text-muted">Avancement:</span>
+                                        <field name="progress" widget="progressbar"/>
+                                    </div>
+                                    <div class="mt-1">
+                                        <span class="text-muted">Budget:</span>
+                                        <field name="budget_percentage" widget="progressbar"/>
+                                    </div>
+                                    <div class="mt-1">
+                                        <i class="fa fa-tasks"/> <field name="task_count"/> tâches
+                                    </div>
+                                </div>
+                                <div class="o_kanban_record_bottom">
+                                    <div class="oe_kanban_bottom_left">
+                                        <field name="activity_ids" widget="kanban_activity"/>
+                                    </div>
+                                    <div class="oe_kanban_bottom_right">
+                                        <field name="manager_id" widget="many2one_avatar_user"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_pfe_project_search" model="ir.ui.view">
+        <field name="name">pfe.project.search</field>
+        <field name="model">pfe.project</field>
+        <field name="arch" type="xml">
+            <search string="Rechercher Projets">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="manager_id"/>
+                <field name="department_id"/>
+                <field name="partner_id"/>
+                <separator/>
+                <filter string="Mes Projets" name="my_projects" domain="[('manager_id', '=', uid)]"/>
+                <filter string="En cours" name="in_progress" 
+                        domain="[('state', 'in', ['planning', 'development', 'testing', 'delivery'])]"/>
+                <filter string="En retard" name="delayed" domain="[('is_delayed', '=', True)]"/>
+                <filter string="Budget Dépassé" name="over_budget" domain="[('is_budget_exceeded', '=', True)]"/>
+                <separator/>
+                <filter string="Brouillon" name="draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="Terminé" name="done" domain="[('state', '=', 'done')]"/>
+                <separator/>
+                <group expand="0" string="Grouper par">
+                    <filter string="État" name="group_state" context="{'group_by': 'state'}"/>
+                    <filter string="Chef de Projet" name="group_manager" context="{'group_by': 'manager_id'}"/>
+                    <filter string="Département" name="group_department" context="{'group_by': 'department_id'}"/>
+                    <filter string="Priorité" name="group_priority" context="{'group_by': 'priority'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Graph View -->
+    <record id="view_pfe_project_graph" model="ir.ui.view">
+        <field name="name">pfe.project.graph</field>
+        <field name="model">pfe.project</field>
+        <field name="arch" type="xml">
+            <graph string="Projets PFE" type="bar">
+                <field name="state" type="row"/>
+                <field name="budget_allocated" type="measure"/>
+                <field name="budget_consumed" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Pivot View -->
+    <record id="view_pfe_project_pivot" model="ir.ui.view">
+        <field name="name">pfe.project.pivot</field>
+        <field name="model">pfe.project</field>
+        <field name="arch" type="xml">
+            <pivot string="Analyse Projets PFE">
+                <field name="department_id" type="row"/>
+                <field name="state" type="col"/>
+                <field name="budget_allocated" type="measure"/>
+                <field name="budget_consumed" type="measure"/>
+                <field name="progress" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- Calendar View -->
+    <record id="view_pfe_project_calendar" model="ir.ui.view">
+        <field name="name">pfe.project.calendar</field>
+        <field name="model">pfe.project</field>
+        <field name="arch" type="xml">
+            <calendar string="Projets PFE" date_start="date_start" date_stop="date_end" color="state" mode="month">
+                <field name="name"/>
+                <field name="manager_id"/>
+                <field name="progress" widget="progressbar"/>
+            </calendar>
+        </field>
+    </record>
+
+    <!-- ==================== PFE TASK VIEWS ==================== -->
+    
+    <!-- Task Form View -->
+    <record id="view_pfe_task_form" model="ir.ui.view">
+        <field name="name">pfe.task.form</field>
+        <field name="model">pfe.task</field>
+        <field name="arch" type="xml">
+            <form string="Tâche PFE">
+                <header>
+                    <button name="action_start" string="Démarrer" type="object" 
+                            class="btn-primary" invisible="state != 'todo'"/>
+                    <button name="action_review" string="En Revue" type="object" 
+                            class="btn-warning" invisible="state != 'in_progress'"/>
+                    <button name="action_done" string="Terminé" type="object" 
+                            class="btn-success" invisible="state not in ('in_progress', 'review')"/>
+                    <button name="action_cancel" string="Annuler" type="object" 
+                            invisible="state in ('done', 'cancelled')"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <field name="is_critical" invisible="1"/>
+                    <widget name="web_ribbon" title="Critique!" bg_color="bg-danger" 
+                            invisible="not is_critical"/>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Nom de la tâche"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="project_id"/>
+                            <field name="milestone_id"/>
+                            <field name="user_id"/>
+                            <field name="priority" widget="priority"/>
+                        </group>
+                        <group>
+                            <field name="date_start"/>
+                            <field name="date_deadline"/>
+                            <field name="hours_planned"/>
+                            <field name="hours_spent"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="progress" widget="progressbar"/>
+                    </group>
+                    <notebook>
+                        <page string="Description" name="description">
+                            <field name="description"/>
+                        </page>
+                        <page string="Feuilles de temps" name="timesheet">
+                            <field name="timesheet_ids">
+                                <tree editable="bottom">
+                                    <field name="date"/>
+                                    <field name="user_id"/>
+                                    <field name="hours" sum="Total Heures"/>
+                                    <field name="description"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Task Tree View -->
+    <record id="view_pfe_task_tree" model="ir.ui.view">
+        <field name="name">pfe.task.tree</field>
+        <field name="model">pfe.task</field>
+        <field name="arch" type="xml">
+            <tree string="Tâches PFE" decoration-danger="is_critical" 
+                  decoration-success="state == 'done'" decoration-muted="state == 'cancelled'">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="project_id"/>
+                <field name="user_id"/>
+                <field name="date_deadline"/>
+                <field name="hours_planned" optional="show"/>
+                <field name="hours_spent" optional="show"/>
+                <field name="progress" widget="progressbar"/>
+                <field name="state" widget="badge" 
+                       decoration-success="state == 'done'"
+                       decoration-info="state == 'in_progress'"
+                       decoration-warning="state == 'review'"/>
+                <field name="priority" widget="priority"/>
+                <field name="is_critical" column_invisible="True"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Task Kanban View -->
+    <record id="view_pfe_task_kanban" model="ir.ui.view">
+        <field name="name">pfe.task.kanban</field>
+        <field name="model">pfe.task</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" class="o_kanban_small_column">
+                <field name="name"/>
+                <field name="user_id"/>
+                <field name="progress"/>
+                <field name="state"/>
+                <field name="priority"/>
+                <field name="color"/>
+                <field name="is_critical"/>
+                <field name="date_deadline"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="#{!selection_mode ? kanban_color(record.color.raw_value) : ''} oe_kanban_global_click">
+                            <div class="oe_kanban_content">
+                                <div class="o_kanban_record_top">
+                                    <div class="o_kanban_record_headings">
+                                        <strong class="o_kanban_record_title">
+                                            <field name="name"/>
+                                        </strong>
+                                    </div>
+                                    <field name="priority" widget="priority"/>
+                                </div>
+                                <div class="o_kanban_record_body">
+                                    <div t-if="record.is_critical.raw_value" class="text-danger">
+                                        <i class="fa fa-exclamation-triangle"/> Tâche critique!
+                                    </div>
+                                    <div t-if="record.date_deadline.raw_value">
+                                        <i class="fa fa-clock-o"/> <field name="date_deadline"/>
+                                    </div>
+                                    <div class="mt-2">
+                                        <field name="progress" widget="progressbar"/>
+                                    </div>
+                                </div>
+                                <div class="o_kanban_record_bottom">
+                                    <div class="oe_kanban_bottom_left">
+                                        <field name="activity_ids" widget="kanban_activity"/>
+                                    </div>
+                                    <div class="oe_kanban_bottom_right">
+                                        <field name="user_id" widget="many2one_avatar_user"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Task Search View -->
+    <record id="view_pfe_task_search" model="ir.ui.view">
+        <field name="name">pfe.task.search</field>
+        <field name="model">pfe.task</field>
+        <field name="arch" type="xml">
+            <search string="Rechercher Tâches">
+                <field name="name"/>
+                <field name="project_id"/>
+                <field name="user_id"/>
+                <separator/>
+                <filter string="Mes Tâches" name="my_tasks" domain="[('user_id', '=', uid)]"/>
+                <filter string="Tâches Critiques" name="critical" domain="[('is_critical', '=', True)]"/>
+                <filter string="En cours" name="in_progress" domain="[('state', '=', 'in_progress')]"/>
+                <separator/>
+                <group expand="0" string="Grouper par">
+                    <filter string="Projet" name="group_project" context="{'group_by': 'project_id'}"/>
+                    <filter string="Assigné à" name="group_user" context="{'group_by': 'user_id'}"/>
+                    <filter string="État" name="group_state" context="{'group_by': 'state'}"/>
+                    <filter string="Jalon" name="group_milestone" context="{'group_by': 'milestone_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ==================== ACTIONS ==================== -->
+    
+    <!-- Project Action -->
+    <record id="action_pfe_project" model="ir.actions.act_window">
+        <field name="name">Projets PFE</field>
+        <field name="res_model">pfe.project</field>
+        <field name="view_mode">kanban,tree,form,graph,pivot,calendar</field>
+        <field name="search_view_id" ref="view_pfe_project_search"/>
+        <field name="context">{'search_default_in_progress': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Créer votre premier projet PFE
+            </p>
+            <p>
+                Suivez les performances de vos projets avec des KPIs, budgets et jalons.
+            </p>
+        </field>
+    </record>
+
+    <!-- Task Action -->
+    <record id="action_pfe_task" model="ir.actions.act_window">
+        <field name="name">Tâches</field>
+        <field name="res_model">pfe.task</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="search_view_id" ref="view_pfe_task_search"/>
+        <field name="context">{'search_default_my_tasks': 1}</field>
+    </record>
+
+</odoo>

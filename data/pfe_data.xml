@@ -1,0 +1,891 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        
+        <!-- ==================== PFE - PROJETS DE FIN D'ÉTUDES ==================== -->
+        
+        <!-- PFE 1: En cours, bon avancement -->
+        <record id="pfe_machine_learning" model="pfe.project">
+            <field name="name">Prédiction de la production solaire par Machine Learning</field>
+            <field name="code">PFE-2026-ML01</field>
+            <field name="description">Sujet de PFE - Étudiant: Ahmed BENALI (ENSEM Casablanca) - Encadrant académique: Pr. Mohamed ALAMI - Encadrant IRESEN: Dr. Karim ELHADI. Objectifs: Développer un modèle ML pour prédire la production PV, intégrer les données météorologiques en temps réel, optimiser la gestion du réseau électrique.</field>
+            <field name="date_start">2026-02-01</field>
+            <field name="date_end">2026-06-30</field>
+            <field name="state">development</field>
+            <field name="priority">2</field>
+            <field name="budget_allocated">15000.00</field>
+            <field name="manager_id" ref="base.user_admin"/>
+        </record>
+
+        <!-- PFE 2: En retard, problèmes rencontrés -->
+        <record id="pfe_iot_energie" model="pfe.project">
+            <field name="name">Système IoT de monitoring énergétique</field>
+            <field name="code">PFE-2025-IOT02</field>
+            <field name="description">Sujet de PFE - Étudiante: Fatima ZOHRA (EMI Rabat) - Encadrant académique: Pr. Hassan OUAZZANI - Encadrant IRESEN: Ing. Sara BENNANI. Retard dû à des problèmes d'approvisionnement en capteurs IoT.</field>
+            <field name="date_start">2025-09-01</field>
+            <field name="date_end">2026-01-15</field>
+            <field name="state">testing</field>
+            <field name="priority">3</field>
+            <field name="budget_allocated">12000.00</field>
+            <field name="manager_id" ref="base.user_admin"/>
+        </record>
+
+        <!-- PFE 3: Terminé avec succès, mention Très Bien -->
+        <record id="pfe_eolien_urbain" model="pfe.project">
+            <field name="name">Étude de faisabilité micro-éolien urbain à Tanger</field>
+            <field name="code">PFE-2025-EOL03</field>
+            <field name="description">Sujet de PFE - Étudiant: Youssef AMRANI (FST Tanger) - Encadrant académique: Pr. Abdelkader FASSI - Encadrant IRESEN: Dr. Nadia CHRAIBI. SOUTENU LE 15/09/2025 - Mention Très Bien (17/20).</field>
+            <field name="date_start">2025-02-01</field>
+            <field name="date_end">2025-06-30</field>
+            <field name="date_end_actual">2025-06-25</field>
+            <field name="state">done</field>
+            <field name="priority">1</field>
+            <field name="budget_allocated">18000.00</field>
+            <field name="manager_id" ref="base.user_admin"/>
+        </record>
+
+        <!-- PFE 4: En planification, nouveau stagiaire -->
+        <record id="pfe_hydrogene_vert" model="pfe.project">
+            <field name="name">Optimisation électrolyseur PEM pour hydrogène vert</field>
+            <field name="code">PFE-2026-H2-04</field>
+            <field name="description">Sujet de PFE - Étudiante: Imane BELHAJ (École Mohammadia d'Ingénieurs) - Encadrant académique: Pr. Rachid SAADANI - Encadrant IRESEN: Dr. Younes ELKHALFI. Stage de 6 mois dans le cadre de la stratégie nationale hydrogène vert.</field>
+            <field name="date_start">2026-02-15</field>
+            <field name="date_end">2026-08-15</field>
+            <field name="state">planning</field>
+            <field name="priority">2</field>
+            <field name="budget_allocated">25000.00</field>
+            <field name="manager_id" ref="base.user_admin"/>
+        </record>
+
+        <!-- PFE 5: Annulé (étudiant a abandonné) -->
+        <record id="pfe_biomasse_annule" model="pfe.project">
+            <field name="name">Valorisation énergétique des déchets agricoles</field>
+            <field name="code">PFE-2025-BIO05</field>
+            <field name="description">Sujet de PFE ANNULÉ - Étudiant: Amine TAHIRI (ENSA Marrakech). L'étudiant a obtenu une opportunité à l'étranger et a abandonné son stage.</field>
+            <field name="date_start">2025-03-01</field>
+            <field name="date_end">2025-08-31</field>
+            <field name="state">cancelled</field>
+            <field name="priority">0</field>
+            <field name="budget_allocated">10000.00</field>
+            <field name="manager_id" ref="base.user_admin"/>
+        </record>
+
+        <!-- PFE 6: Brouillon, en cours de définition -->
+        <record id="pfe_smart_grid" model="pfe.project">
+            <field name="name">Intelligence artificielle pour Smart Grid</field>
+            <field name="code">PFE-2026-AI06</field>
+            <field name="description">Sujet de PFE en cours de définition - Candidat pressenti: Omar LAHLOU (ENIAD Berkane) - Encadrant IRESEN: Dr. Leila MANSOURI.</field>
+            <field name="date_start">2026-03-01</field>
+            <field name="date_end">2026-09-01</field>
+            <field name="state">draft</field>
+            <field name="priority">1</field>
+            <field name="budget_allocated">20000.00</field>
+            <field name="manager_id" ref="base.user_admin"/>
+        </record>
+
+        <!-- PFE 7: En phase de livraison (soutenance proche) -->
+        <record id="pfe_desalinisation" model="pfe.project">
+            <field name="name">Dessalement solaire pour zones rurales</field>
+            <field name="code">PFE-2025-DES07</field>
+            <field name="description">Sujet de PFE - Étudiant: Khalid MOUSSAOUI (ENIM Rabat) - Encadrant académique: Pr. Jamal BENABDELLAH - Encadrant IRESEN: Ing. Samira ALAOUI. SOUTENANCE PRÉVUE LE 25/01/2026.</field>
+            <field name="date_start">2025-07-01</field>
+            <field name="date_end">2026-01-31</field>
+            <field name="state">delivery</field>
+            <field name="priority">3</field>
+            <field name="budget_allocated">22000.00</field>
+            <field name="manager_id" ref="base.user_admin"/>
+        </record>
+
+        <!-- PFE 8: PFE de Master/Doctorat (long terme) -->
+        <record id="pfe_stockage_thermique" model="pfe.project">
+            <field name="name">Stockage thermique haute température pour CSP</field>
+            <field name="code">PFE-2026-CSP08</field>
+            <field name="description">Sujet de Thèse de Doctorat - Doctorant: Mehdi FILALI (UM5 Rabat) - Directeur de thèse: Pr. Abdelmajid JAMIL - Co-encadrant IRESEN: Dr. Hanane DAGDOUGUI. Projet de recherche sur 3 ans (2026-2028).</field>
+            <field name="date_start">2026-01-01</field>
+            <field name="date_end">2028-12-31</field>
+            <field name="state">development</field>
+            <field name="priority">2</field>
+            <field name="budget_allocated">150000.00</field>
+            <field name="manager_id" ref="base.user_admin"/>
+        </record>
+
+        <!-- ==================== TÂCHES PFE MACHINE LEARNING ==================== -->
+        
+        <record id="task_ml_1" model="pfe.task">
+            <field name="name">Recherche bibliographique</field>
+            <field name="project_id" ref="pfe_machine_learning"/>
+            <field name="description">État de l'art sur les méthodes ML pour prédiction PV</field>
+            <field name="date_start">2026-02-01</field>
+            <field name="date_deadline">2026-02-28</field>
+            <field name="state">done</field>
+            <field name="progress">100</field>
+            <field name="hours_planned">40</field>
+            <field name="priority">2</field>
+            <field name="user_id" ref="base.user_admin"/>
+        </record>
+
+        <record id="task_ml_2" model="pfe.task">
+            <field name="name">Collecte et prétraitement des données</field>
+            <field name="project_id" ref="pfe_machine_learning"/>
+            <field name="description">Récupération données météo et production de la centrale Green Energy Park</field>
+            <field name="date_start">2026-03-01</field>
+            <field name="date_deadline">2026-03-15</field>
+            <field name="state">done</field>
+            <field name="progress">100</field>
+            <field name="hours_planned">30</field>
+            <field name="priority">3</field>
+            <field name="user_id" ref="base.user_admin"/>
+        </record>
+
+        <record id="task_ml_3" model="pfe.task">
+            <field name="name">Développement modèle LSTM</field>
+            <field name="project_id" ref="pfe_machine_learning"/>
+            <field name="description">Implémentation réseau de neurones LSTM avec TensorFlow</field>
+            <field name="date_start">2026-03-16</field>
+            <field name="date_deadline">2026-04-15</field>
+            <field name="state">in_progress</field>
+            <field name="progress">65</field>
+            <field name="hours_planned">60</field>
+            <field name="priority">3</field>
+            <field name="user_id" ref="base.user_admin"/>
+        </record>
+
+        <record id="task_ml_4" model="pfe.task">
+            <field name="name">Entraînement et validation</field>
+            <field name="project_id" ref="pfe_machine_learning"/>
+            <field name="description">Optimisation hyperparamètres et validation croisée</field>
+            <field name="date_start">2026-04-16</field>
+            <field name="date_deadline">2026-05-15</field>
+            <field name="state">todo</field>
+            <field name="progress">0</field>
+            <field name="hours_planned">50</field>
+            <field name="priority">2</field>
+            <field name="user_id" ref="base.user_admin"/>
+        </record>
+
+        <record id="task_ml_5" model="pfe.task">
+            <field name="name">Déploiement API prédiction</field>
+            <field name="project_id" ref="pfe_machine_learning"/>
+            <field name="description">Mise en production du modèle via API REST Flask</field>
+            <field name="date_start">2026-05-16</field>
+            <field name="date_deadline">2026-06-01</field>
+            <field name="state">todo</field>
+            <field name="progress">0</field>
+            <field name="hours_planned">30</field>
+            <field name="priority">2</field>
+            <field name="user_id" ref="base.user_admin"/>
+        </record>
+
+        <record id="task_ml_6" model="pfe.task">
+            <field name="name">Rédaction rapport PFE</field>
+            <field name="project_id" ref="pfe_machine_learning"/>
+            <field name="description">Rédaction du mémoire de fin d'études (60 pages)</field>
+            <field name="date_start">2026-05-01</field>
+            <field name="date_deadline">2026-06-15</field>
+            <field name="state">todo</field>
+            <field name="progress">0</field>
+            <field name="hours_planned">50</field>
+            <field name="priority">3</field>
+            <field name="user_id" ref="base.user_admin"/>
+        </record>
+
+        <record id="task_ml_7" model="pfe.task">
+            <field name="name">Préparation soutenance</field>
+            <field name="project_id" ref="pfe_machine_learning"/>
+            <field name="description">Préparation présentation PowerPoint et répétition</field>
+            <field name="date_start">2026-06-16</field>
+            <field name="date_deadline">2026-06-28</field>
+            <field name="state">todo</field>
+            <field name="progress">0</field>
+            <field name="hours_planned">20</field>
+            <field name="priority">3</field>
+            <field name="user_id" ref="base.user_admin"/>
+        </record>
+
+        <!-- ==================== TÂCHES PFE IOT (En retard) ==================== -->
+        
+        <record id="task_iot_1" model="pfe.task">
+            <field name="name">Étude des protocoles IoT</field>
+            <field name="project_id" ref="pfe_iot_energie"/>
+            <field name="date_deadline">2025-09-30</field>
+            <field name="state">done</field>
+            <field name="progress">100</field>
+            <field name="hours_planned">30</field>
+            <field name="user_id" ref="base.user_admin"/>
+        </record>
+
+        <record id="task_iot_2" model="pfe.task">
+            <field name="name">Design architecture système</field>
+            <field name="project_id" ref="pfe_iot_energie"/>
+            <field name="date_deadline">2025-10-31</field>
+            <field name="state">done</field>
+            <field name="progress">100</field>
+            <field name="hours_planned">40</field>
+            <field name="user_id" ref="base.user_admin"/>
+        </record>
+
+        <record id="task_iot_3" model="pfe.task">
+            <field name="name">Commande capteurs et matériel</field>
+            <field name="project_id" ref="pfe_iot_energie"/>
+            <field name="description">Retard livraison fournisseur - 3 semaines de délai</field>
+            <field name="date_deadline">2025-11-15</field>
+            <field name="state">done</field>
+            <field name="progress">100</field>
+            <field name="hours_planned">10</field>
+            <field name="priority">3</field>
+            <field name="user_id" ref="base.user_admin"/>
+        </record>
+
+        <record id="task_iot_4" model="pfe.task">
+            <field name="name">Développement firmware ESP32</field>
+            <field name="project_id" ref="pfe_iot_energie"/>
+            <field name="date_deadline">2025-12-15</field>
+            <field name="state">done</field>
+            <field name="progress">100</field>
+            <field name="hours_planned">50</field>
+            <field name="user_id" ref="base.user_admin"/>
+        </record>
+
+        <record id="task_iot_5" model="pfe.task">
+            <field name="name">Développement dashboard web</field>
+            <field name="project_id" ref="pfe_iot_energie"/>
+            <field name="date_deadline">2026-01-05</field>
+            <field name="state">in_progress</field>
+            <field name="progress">80</field>
+            <field name="hours_planned">60</field>
+            <field name="priority">3</field>
+            <field name="user_id" ref="base.user_admin"/>
+        </record>
+
+        <record id="task_iot_6" model="pfe.task">
+            <field name="name">Tests d'intégration</field>
+            <field name="project_id" ref="pfe_iot_energie"/>
+            <field name="date_deadline">2026-01-10</field>
+            <field name="state">in_progress</field>
+            <field name="progress">40</field>
+            <field name="hours_planned">30</field>
+            <field name="priority">3</field>
+            <field name="user_id" ref="base.user_admin"/>
+        </record>
+
+        <record id="task_iot_7" model="pfe.task">
+            <field name="name">Rédaction rapport et soutenance</field>
+            <field name="project_id" ref="pfe_iot_energie"/>
+            <field name="date_deadline">2026-01-15</field>
+            <field name="state">review</field>
+            <field name="progress">60</field>
+            <field name="hours_planned">40</field>
+            <field name="priority">3</field>
+            <field name="user_id" ref="base.user_admin"/>
+        </record>
+
+        <!-- ==================== TÂCHES PFE ÉOLIEN (Terminé) ==================== -->
+        
+        <record id="task_eol_1" model="pfe.task">
+            <field name="name">Campagne de mesures vent</field>
+            <field name="project_id" ref="pfe_eolien_urbain"/>
+            <field name="date_deadline">2025-03-15</field>
+            <field name="state">done</field>
+            <field name="progress">100</field>
+            <field name="hours_planned">60</field>
+            <field name="user_id" ref="base.user_admin"/>
+        </record>
+
+        <record id="task_eol_2" model="pfe.task">
+            <field name="name">Simulation CFD Ansys Fluent</field>
+            <field name="project_id" ref="pfe_eolien_urbain"/>
+            <field name="date_deadline">2025-04-30</field>
+            <field name="state">done</field>
+            <field name="progress">100</field>
+            <field name="hours_planned">80</field>
+            <field name="user_id" ref="base.user_admin"/>
+        </record>
+
+        <record id="task_eol_3" model="pfe.task">
+            <field name="name">Conception CAO pales</field>
+            <field name="project_id" ref="pfe_eolien_urbain"/>
+            <field name="date_deadline">2025-05-15</field>
+            <field name="state">done</field>
+            <field name="progress">100</field>
+            <field name="hours_planned">40</field>
+            <field name="user_id" ref="base.user_admin"/>
+        </record>
+
+        <record id="task_eol_4" model="pfe.task">
+            <field name="name">Fabrication prototype</field>
+            <field name="project_id" ref="pfe_eolien_urbain"/>
+            <field name="date_deadline">2025-06-10</field>
+            <field name="state">done</field>
+            <field name="progress">100</field>
+            <field name="hours_planned">50</field>
+            <field name="user_id" ref="base.user_admin"/>
+        </record>
+
+        <record id="task_eol_5" model="pfe.task">
+            <field name="name">Tests et validation</field>
+            <field name="project_id" ref="pfe_eolien_urbain"/>
+            <field name="date_deadline">2025-06-25</field>
+            <field name="state">done</field>
+            <field name="progress">100</field>
+            <field name="hours_planned">30</field>
+            <field name="user_id" ref="base.user_admin"/>
+        </record>
+
+        <!-- ==================== TÂCHES PFE DESSALEMENT ==================== -->
+        
+        <record id="task_des_1" model="pfe.task">
+            <field name="name">Dimensionnement système osmose</field>
+            <field name="project_id" ref="pfe_desalinisation"/>
+            <field name="date_deadline">2025-08-31</field>
+            <field name="state">done</field>
+            <field name="progress">100</field>
+            <field name="hours_planned">50</field>
+            <field name="user_id" ref="base.user_admin"/>
+        </record>
+
+        <record id="task_des_2" model="pfe.task">
+            <field name="name">Installation panneaux PV</field>
+            <field name="project_id" ref="pfe_desalinisation"/>
+            <field name="date_deadline">2025-10-15</field>
+            <field name="state">done</field>
+            <field name="progress">100</field>
+            <field name="hours_planned">40</field>
+            <field name="user_id" ref="base.user_admin"/>
+        </record>
+
+        <record id="task_des_3" model="pfe.task">
+            <field name="name">Mise en service prototype</field>
+            <field name="project_id" ref="pfe_desalinisation"/>
+            <field name="date_deadline">2025-12-15</field>
+            <field name="state">done</field>
+            <field name="progress">100</field>
+            <field name="hours_planned">60</field>
+            <field name="user_id" ref="base.user_admin"/>
+        </record>
+
+        <record id="task_des_4" model="pfe.task">
+            <field name="name">Collecte données performance</field>
+            <field name="project_id" ref="pfe_desalinisation"/>
+            <field name="date_deadline">2026-01-10</field>
+            <field name="state">done</field>
+            <field name="progress">100</field>
+            <field name="hours_planned">30</field>
+            <field name="user_id" ref="base.user_admin"/>
+        </record>
+
+        <record id="task_des_5" model="pfe.task">
+            <field name="name">Finalisation rapport PFE</field>
+            <field name="project_id" ref="pfe_desalinisation"/>
+            <field name="date_deadline">2026-01-20</field>
+            <field name="state">in_progress</field>
+            <field name="progress">85</field>
+            <field name="hours_planned">40</field>
+            <field name="priority">3</field>
+            <field name="user_id" ref="base.user_admin"/>
+        </record>
+
+        <record id="task_des_6" model="pfe.task">
+            <field name="name">Préparation soutenance</field>
+            <field name="project_id" ref="pfe_desalinisation"/>
+            <field name="date_deadline">2026-01-25</field>
+            <field name="state">todo</field>
+            <field name="progress">0</field>
+            <field name="hours_planned">15</field>
+            <field name="priority">3</field>
+            <field name="user_id" ref="base.user_admin"/>
+        </record>
+
+        <!-- ==================== JALONS PFE ==================== -->
+        
+        <record id="milestone_ml_1" model="pfe.milestone">
+            <field name="name">Validation sujet par jury</field>
+            <field name="project_id" ref="pfe_machine_learning"/>
+            <field name="date_target">2026-02-15</field>
+            <field name="date_achieved">2026-02-10</field>
+            <field name="state">achieved</field>
+        </record>
+
+        <record id="milestone_ml_2" model="pfe.milestone">
+            <field name="name">Revue mi-parcours</field>
+            <field name="project_id" ref="pfe_machine_learning"/>
+            <field name="date_target">2026-04-15</field>
+            <field name="state">pending</field>
+        </record>
+
+        <record id="milestone_ml_3" model="pfe.milestone">
+            <field name="name">Dépôt rapport final</field>
+            <field name="project_id" ref="pfe_machine_learning"/>
+            <field name="date_target">2026-06-15</field>
+            <field name="state">pending</field>
+        </record>
+
+        <record id="milestone_ml_4" model="pfe.milestone">
+            <field name="name">Soutenance PFE</field>
+            <field name="project_id" ref="pfe_machine_learning"/>
+            <field name="date_target">2026-06-30</field>
+            <field name="state">pending</field>
+        </record>
+
+        <record id="milestone_iot_1" model="pfe.milestone">
+            <field name="name">Livraison matériel</field>
+            <field name="project_id" ref="pfe_iot_energie"/>
+            <field name="date_target">2025-11-15</field>
+            <field name="date_achieved">2025-12-05</field>
+            <field name="state">achieved</field>
+        </record>
+
+        <record id="milestone_iot_2" model="pfe.milestone">
+            <field name="name">Prototype fonctionnel</field>
+            <field name="project_id" ref="pfe_iot_energie"/>
+            <field name="date_target">2025-12-31</field>
+            <field name="state">pending</field>
+        </record>
+
+        <record id="milestone_iot_3" model="pfe.milestone">
+            <field name="name">Soutenance PFE</field>
+            <field name="project_id" ref="pfe_iot_energie"/>
+            <field name="date_target">2026-01-20</field>
+            <field name="state">pending</field>
+        </record>
+
+        <record id="milestone_eol_1" model="pfe.milestone">
+            <field name="name">Validation conception</field>
+            <field name="project_id" ref="pfe_eolien_urbain"/>
+            <field name="date_target">2025-04-30</field>
+            <field name="date_achieved">2025-04-25</field>
+            <field name="state">achieved</field>
+        </record>
+
+        <record id="milestone_eol_2" model="pfe.milestone">
+            <field name="name">Soutenance PFE</field>
+            <field name="project_id" ref="pfe_eolien_urbain"/>
+            <field name="date_target">2025-06-30</field>
+            <field name="date_achieved">2025-06-25</field>
+            <field name="state">achieved</field>
+        </record>
+
+        <record id="milestone_des_1" model="pfe.milestone">
+            <field name="name">Installation terrain</field>
+            <field name="project_id" ref="pfe_desalinisation"/>
+            <field name="date_target">2025-11-30</field>
+            <field name="date_achieved">2025-11-28</field>
+            <field name="state">achieved</field>
+        </record>
+
+        <record id="milestone_des_2" model="pfe.milestone">
+            <field name="name">Soutenance PFE</field>
+            <field name="project_id" ref="pfe_desalinisation"/>
+            <field name="date_target">2026-01-25</field>
+            <field name="state">pending</field>
+        </record>
+
+        <!-- ==================== BUDGET PFE ==================== -->
+        
+        <record id="budget_ml_1" model="pfe.budget.line">
+            <field name="name">Indemnité stagiaire (5 mois)</field>
+            <field name="project_id" ref="pfe_machine_learning"/>
+            <field name="category">personnel</field>
+            <field name="amount_planned">7500.00</field>
+            <field name="amount_spent">4500.00</field>
+            <field name="date">2026-02-01</field>
+        </record>
+
+        <record id="budget_ml_2" model="pfe.budget.line">
+            <field name="name">GPU Cloud Computing (AWS/GCP)</field>
+            <field name="project_id" ref="pfe_machine_learning"/>
+            <field name="category">infrastructure</field>
+            <field name="amount_planned">3000.00</field>
+            <field name="amount_spent">1200.00</field>
+            <field name="date">2026-03-01</field>
+        </record>
+
+        <record id="budget_ml_3" model="pfe.budget.line">
+            <field name="name">Licence logiciels (PyCharm, Tableau)</field>
+            <field name="project_id" ref="pfe_machine_learning"/>
+            <field name="category">software</field>
+            <field name="amount_planned">1500.00</field>
+            <field name="amount_spent">1200.00</field>
+            <field name="date">2026-02-15</field>
+        </record>
+
+        <record id="budget_ml_4" model="pfe.budget.line">
+            <field name="name">Station météo portable</field>
+            <field name="project_id" ref="pfe_machine_learning"/>
+            <field name="category">equipment</field>
+            <field name="amount_planned">2000.00</field>
+            <field name="amount_spent">1850.00</field>
+            <field name="date">2026-03-01</field>
+        </record>
+
+        <record id="budget_ml_5" model="pfe.budget.line">
+            <field name="name">Déplacements Green Energy Park</field>
+            <field name="project_id" ref="pfe_machine_learning"/>
+            <field name="category">travel</field>
+            <field name="amount_planned">1000.00</field>
+            <field name="amount_spent">350.00</field>
+            <field name="date">2026-03-15</field>
+        </record>
+
+        <record id="budget_iot_1" model="pfe.budget.line">
+            <field name="name">Indemnité stagiaire (5 mois)</field>
+            <field name="project_id" ref="pfe_iot_energie"/>
+            <field name="category">personnel</field>
+            <field name="amount_planned">6000.00</field>
+            <field name="amount_spent">6000.00</field>
+            <field name="date">2025-09-01</field>
+        </record>
+
+        <record id="budget_iot_2" model="pfe.budget.line">
+            <field name="name">Kit capteurs IoT (ESP32, capteurs)</field>
+            <field name="project_id" ref="pfe_iot_energie"/>
+            <field name="category">equipment</field>
+            <field name="amount_planned">2000.00</field>
+            <field name="amount_spent">3500.00</field>
+            <field name="date">2025-11-01</field>
+            <field name="notes">Surcoût: pénurie composants + frais express</field>
+        </record>
+
+        <record id="budget_iot_3" model="pfe.budget.line">
+            <field name="name">Serveur cloud InfluxDB</field>
+            <field name="project_id" ref="pfe_iot_energie"/>
+            <field name="category">infrastructure</field>
+            <field name="amount_planned">1500.00</field>
+            <field name="amount_spent">1800.00</field>
+            <field name="date">2025-10-15</field>
+        </record>
+
+        <record id="budget_iot_4" model="pfe.budget.line">
+            <field name="name">Compteurs énergie Modbus</field>
+            <field name="project_id" ref="pfe_iot_energie"/>
+            <field name="category">equipment</field>
+            <field name="amount_planned">2500.00</field>
+            <field name="amount_spent">2400.00</field>
+            <field name="date">2025-11-15</field>
+        </record>
+
+        <record id="budget_eol_1" model="pfe.budget.line">
+            <field name="name">Indemnité stagiaire</field>
+            <field name="project_id" ref="pfe_eolien_urbain"/>
+            <field name="category">personnel</field>
+            <field name="amount_planned">6000.00</field>
+            <field name="amount_spent">6000.00</field>
+            <field name="date">2025-02-01</field>
+        </record>
+
+        <record id="budget_eol_2" model="pfe.budget.line">
+            <field name="name">Anémomètre professionnel</field>
+            <field name="project_id" ref="pfe_eolien_urbain"/>
+            <field name="category">equipment</field>
+            <field name="amount_planned">3000.00</field>
+            <field name="amount_spent">2800.00</field>
+            <field name="date">2025-02-15</field>
+        </record>
+
+        <record id="budget_eol_3" model="pfe.budget.line">
+            <field name="name">Matériaux prototype (composites)</field>
+            <field name="project_id" ref="pfe_eolien_urbain"/>
+            <field name="category">equipment</field>
+            <field name="amount_planned">4000.00</field>
+            <field name="amount_spent">3200.00</field>
+            <field name="date">2025-05-01</field>
+        </record>
+
+        <record id="budget_eol_4" model="pfe.budget.line">
+            <field name="name">Licence Ansys Fluent (étudiant)</field>
+            <field name="project_id" ref="pfe_eolien_urbain"/>
+            <field name="category">software</field>
+            <field name="amount_planned">2000.00</field>
+            <field name="amount_spent">1500.00</field>
+            <field name="date">2025-03-01</field>
+        </record>
+
+        <record id="budget_eol_5" model="pfe.budget.line">
+            <field name="name">Déplacements Tanger</field>
+            <field name="project_id" ref="pfe_eolien_urbain"/>
+            <field name="category">travel</field>
+            <field name="amount_planned">3000.00</field>
+            <field name="amount_spent">2500.00</field>
+            <field name="date">2025-03-15</field>
+        </record>
+
+        <record id="budget_des_1" model="pfe.budget.line">
+            <field name="name">Indemnité stagiaire (7 mois)</field>
+            <field name="project_id" ref="pfe_desalinisation"/>
+            <field name="category">personnel</field>
+            <field name="amount_planned">8400.00</field>
+            <field name="amount_spent">7200.00</field>
+            <field name="date">2025-07-01</field>
+        </record>
+
+        <record id="budget_des_2" model="pfe.budget.line">
+            <field name="name">Module osmose inverse</field>
+            <field name="project_id" ref="pfe_desalinisation"/>
+            <field name="category">equipment</field>
+            <field name="amount_planned">5000.00</field>
+            <field name="amount_spent">4800.00</field>
+            <field name="date">2025-08-15</field>
+        </record>
+
+        <record id="budget_des_3" model="pfe.budget.line">
+            <field name="name">Panneaux solaires 2kWc</field>
+            <field name="project_id" ref="pfe_desalinisation"/>
+            <field name="category">equipment</field>
+            <field name="amount_planned">4000.00</field>
+            <field name="amount_spent">3900.00</field>
+            <field name="date">2025-09-01</field>
+        </record>
+
+        <record id="budget_des_4" model="pfe.budget.line">
+            <field name="name">Installation site Ouarzazate</field>
+            <field name="project_id" ref="pfe_desalinisation"/>
+            <field name="category">infrastructure</field>
+            <field name="amount_planned">3000.00</field>
+            <field name="amount_spent">2800.00</field>
+            <field name="date">2025-11-01</field>
+        </record>
+
+        <record id="budget_des_5" model="pfe.budget.line">
+            <field name="name">Déplacements et hébergement</field>
+            <field name="project_id" ref="pfe_desalinisation"/>
+            <field name="category">travel</field>
+            <field name="amount_planned">1600.00</field>
+            <field name="amount_spent">1500.00</field>
+            <field name="date">2025-11-15</field>
+        </record>
+
+        <!-- ==================== KPIs PFE ==================== -->
+        
+        <record id="kpi_ml_budget" model="pfe.kpi">
+            <field name="name">Consommation Budget</field>
+            <field name="code">ML-BUDGET</field>
+            <field name="project_id" ref="pfe_machine_learning"/>
+            <field name="kpi_type">budget</field>
+            <field name="calculation_method">budget_consumed</field>
+            <field name="target_value">100</field>
+            <field name="unit">%</field>
+            <field name="threshold_warning">80</field>
+            <field name="threshold_danger">100</field>
+        </record>
+
+        <record id="kpi_ml_progress" model="pfe.kpi">
+            <field name="name">Avancement Global</field>
+            <field name="code">ML-PROGRESS</field>
+            <field name="project_id" ref="pfe_machine_learning"/>
+            <field name="kpi_type">performance</field>
+            <field name="calculation_method">progress</field>
+            <field name="target_value">100</field>
+            <field name="unit">%</field>
+            <field name="threshold_warning">50</field>
+            <field name="threshold_danger">30</field>
+        </record>
+
+        <record id="kpi_ml_accuracy" model="pfe.kpi">
+            <field name="name">Précision modèle ML</field>
+            <field name="code">ML-ACCURACY</field>
+            <field name="project_id" ref="pfe_machine_learning"/>
+            <field name="kpi_type">quality</field>
+            <field name="calculation_method">manual</field>
+            <field name="target_value">95</field>
+            <field name="current_value">87</field>
+            <field name="unit">%</field>
+            <field name="threshold_warning">85</field>
+            <field name="threshold_danger">80</field>
+            <field name="description">R² score du modèle de prédiction</field>
+        </record>
+
+        <record id="kpi_iot_budget" model="pfe.kpi">
+            <field name="name">Consommation Budget</field>
+            <field name="code">IOT-BUDGET</field>
+            <field name="project_id" ref="pfe_iot_energie"/>
+            <field name="kpi_type">budget</field>
+            <field name="calculation_method">budget_consumed</field>
+            <field name="target_value">100</field>
+            <field name="unit">%</field>
+            <field name="threshold_warning">80</field>
+            <field name="threshold_danger">100</field>
+        </record>
+
+        <record id="kpi_iot_delay" model="pfe.kpi">
+            <field name="name">Jours de Retard</field>
+            <field name="code">IOT-DELAY</field>
+            <field name="project_id" ref="pfe_iot_energie"/>
+            <field name="kpi_type">time</field>
+            <field name="calculation_method">delay_days</field>
+            <field name="target_value">0</field>
+            <field name="unit">jours</field>
+            <field name="threshold_warning">7</field>
+            <field name="threshold_danger">14</field>
+        </record>
+
+        <record id="kpi_iot_sensors" model="pfe.kpi">
+            <field name="name">Capteurs opérationnels</field>
+            <field name="code">IOT-SENSORS</field>
+            <field name="project_id" ref="pfe_iot_energie"/>
+            <field name="kpi_type">quality</field>
+            <field name="calculation_method">manual</field>
+            <field name="target_value">10</field>
+            <field name="current_value">8</field>
+            <field name="unit">unités</field>
+            <field name="threshold_warning">8</field>
+            <field name="threshold_danger">6</field>
+        </record>
+
+        <record id="kpi_des_budget" model="pfe.kpi">
+            <field name="name">Consommation Budget</field>
+            <field name="code">DES-BUDGET</field>
+            <field name="project_id" ref="pfe_desalinisation"/>
+            <field name="kpi_type">budget</field>
+            <field name="calculation_method">budget_consumed</field>
+            <field name="target_value">100</field>
+            <field name="unit">%</field>
+            <field name="threshold_warning">80</field>
+            <field name="threshold_danger">100</field>
+        </record>
+
+        <record id="kpi_des_production" model="pfe.kpi">
+            <field name="name">Production eau potable</field>
+            <field name="code">DES-PRODUCTION</field>
+            <field name="project_id" ref="pfe_desalinisation"/>
+            <field name="kpi_type">performance</field>
+            <field name="calculation_method">manual</field>
+            <field name="target_value">500</field>
+            <field name="current_value">520</field>
+            <field name="unit">L/jour</field>
+            <field name="threshold_warning">400</field>
+            <field name="threshold_danger">300</field>
+            <field name="description">Objectif dépassé!</field>
+        </record>
+
+        <record id="kpi_des_quality" model="pfe.kpi">
+            <field name="name">Qualité eau (TDS)</field>
+            <field name="code">DES-TDS</field>
+            <field name="project_id" ref="pfe_desalinisation"/>
+            <field name="kpi_type">quality</field>
+            <field name="calculation_method">manual</field>
+            <field name="target_value">500</field>
+            <field name="current_value">280</field>
+            <field name="unit">ppm</field>
+            <field name="threshold_warning">400</field>
+            <field name="threshold_danger">500</field>
+            <field name="description">Total Dissolved Solids - Excellent!</field>
+        </record>
+
+        <record id="kpi_eol_note" model="pfe.kpi">
+            <field name="name">Note soutenance</field>
+            <field name="code">EOL-NOTE</field>
+            <field name="project_id" ref="pfe_eolien_urbain"/>
+            <field name="kpi_type">quality</field>
+            <field name="calculation_method">manual</field>
+            <field name="target_value">20</field>
+            <field name="current_value">17</field>
+            <field name="unit">/20</field>
+            <field name="threshold_warning">14</field>
+            <field name="threshold_danger">12</field>
+            <field name="description">Mention Très Bien</field>
+        </record>
+
+        <record id="kpi_eol_power" model="pfe.kpi">
+            <field name="name">Puissance prototype</field>
+            <field name="code">EOL-POWER</field>
+            <field name="project_id" ref="pfe_eolien_urbain"/>
+            <field name="kpi_type">performance</field>
+            <field name="calculation_method">manual</field>
+            <field name="target_value">500</field>
+            <field name="current_value">480</field>
+            <field name="unit">W</field>
+            <field name="threshold_warning">400</field>
+            <field name="threshold_danger">300</field>
+        </record>
+
+        <!-- ==================== FEUILLES DE TEMPS PFE ==================== -->
+        
+        <record id="ts_ml_1" model="pfe.timesheet">
+            <field name="task_id" ref="task_ml_1"/>
+            <field name="user_id" ref="base.user_admin"/>
+            <field name="date">2026-02-03</field>
+            <field name="hours">8</field>
+            <field name="description">Lecture articles scientifiques IEEE sur prédiction PV</field>
+        </record>
+
+        <record id="ts_ml_2" model="pfe.timesheet">
+            <field name="task_id" ref="task_ml_1"/>
+            <field name="user_id" ref="base.user_admin"/>
+            <field name="date">2026-02-04</field>
+            <field name="hours">7</field>
+            <field name="description">Analyse comparative méthodes LSTM vs ARIMA</field>
+        </record>
+
+        <record id="ts_ml_3" model="pfe.timesheet">
+            <field name="task_id" ref="task_ml_2"/>
+            <field name="user_id" ref="base.user_admin"/>
+            <field name="date">2026-03-03</field>
+            <field name="hours">8</field>
+            <field name="description">Extraction données SCADA Green Energy Park</field>
+        </record>
+
+        <record id="ts_ml_4" model="pfe.timesheet">
+            <field name="task_id" ref="task_ml_2"/>
+            <field name="user_id" ref="base.user_admin"/>
+            <field name="date">2026-03-04</field>
+            <field name="hours">6</field>
+            <field name="description">Nettoyage et normalisation dataset</field>
+        </record>
+
+        <record id="ts_ml_5" model="pfe.timesheet">
+            <field name="task_id" ref="task_ml_3"/>
+            <field name="user_id" ref="base.user_admin"/>
+            <field name="date">2026-03-20</field>
+            <field name="hours">8</field>
+            <field name="description">Implémentation architecture LSTM en TensorFlow</field>
+        </record>
+
+        <record id="ts_ml_6" model="pfe.timesheet">
+            <field name="task_id" ref="task_ml_3"/>
+            <field name="user_id" ref="base.user_admin"/>
+            <field name="date">2026-03-21</field>
+            <field name="hours">7</field>
+            <field name="description">Debugging et optimisation code Python</field>
+        </record>
+
+        <record id="ts_iot_1" model="pfe.timesheet">
+            <field name="task_id" ref="task_iot_5"/>
+            <field name="user_id" ref="base.user_admin"/>
+            <field name="date">2025-12-20</field>
+            <field name="hours">8</field>
+            <field name="description">Développement interface Grafana</field>
+        </record>
+
+        <record id="ts_iot_2" model="pfe.timesheet">
+            <field name="task_id" ref="task_iot_5"/>
+            <field name="user_id" ref="base.user_admin"/>
+            <field name="date">2025-12-21</field>
+            <field name="hours">6</field>
+            <field name="description">Intégration alertes temps réel</field>
+        </record>
+
+        <record id="ts_iot_3" model="pfe.timesheet">
+            <field name="task_id" ref="task_iot_6"/>
+            <field name="user_id" ref="base.user_admin"/>
+            <field name="date">2026-01-06</field>
+            <field name="hours">8</field>
+            <field name="description">Tests communication MQTT</field>
+        </record>
+
+        <record id="ts_des_1" model="pfe.timesheet">
+            <field name="task_id" ref="task_des_5"/>
+            <field name="user_id" ref="base.user_admin"/>
+            <field name="date">2026-01-10</field>
+            <field name="hours">6</field>
+            <field name="description">Rédaction chapitre résultats</field>
+        </record>
+
+        <record id="ts_des_2" model="pfe.timesheet">
+            <field name="task_id" ref="task_des_5"/>
+            <field name="user_id" ref="base.user_admin"/>
+            <field name="date">2026-01-11</field>
+            <field name="hours">5</field>
+            <field name="description">Mise en forme graphiques et tableaux</field>
+        </record>
+
+    </data>
+</odoo>

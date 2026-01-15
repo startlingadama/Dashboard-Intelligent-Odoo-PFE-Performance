@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ==================== KPI VIEWS ==================== -->
+    
+    <!-- KPI Form View -->
+    <record id="view_pfe_kpi_form" model="ir.ui.view">
+        <field name="name">pfe.kpi.form</field>
+        <field name="model">pfe.kpi</field>
+        <field name="arch" type="xml">
+            <form string="KPI">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Nom du KPI"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="code"/>
+                            <field name="kpi_type"/>
+                            <field name="calculation_method"/>
+                            <field name="project_id"/>
+                            <field name="active"/>
+                        </group>
+                        <group>
+                            <field name="target_value"/>
+                            <field name="current_value"/>
+                            <field name="unit"/>
+                            <field name="status" widget="badge" 
+                                   decoration-success="status == 'good'"
+                                   decoration-warning="status == 'warning'"
+                                   decoration-danger="status == 'danger'"/>
+                        </group>
+                    </group>
+                    <group string="Seuils d'alerte">
+                        <group>
+                            <field name="threshold_warning"/>
+                            <field name="threshold_danger"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- KPI Tree View -->
+    <record id="view_pfe_kpi_tree" model="ir.ui.view">
+        <field name="name">pfe.kpi.tree</field>
+        <field name="model">pfe.kpi</field>
+        <field name="arch" type="xml">
+            <tree string="KPIs" decoration-danger="status == 'danger'" 
+                  decoration-warning="status == 'warning'" decoration-success="status == 'good'">
+                <field name="sequence" widget="handle"/>
+                <field name="code"/>
+                <field name="name"/>
+                <field name="project_id"/>
+                <field name="kpi_type" widget="badge"/>
+                <field name="target_value"/>
+                <field name="current_value"/>
+                <field name="unit"/>
+                <field name="status" widget="badge" 
+                       decoration-success="status == 'good'"
+                       decoration-warning="status == 'warning'"
+                       decoration-danger="status == 'danger'"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- KPI Kanban View -->
+    <record id="view_pfe_kpi_kanban" model="ir.ui.view">
+        <field name="name">pfe.kpi.kanban</field>
+        <field name="model">pfe.kpi</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_dashboard">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="kpi_type"/>
+                <field name="target_value"/>
+                <field name="current_value"/>
+                <field name="unit"/>
+                <field name="status"/>
+                <field name="color"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_card oe_kanban_global_click #{kanban_color(record.color.raw_value)}">
+                            <div class="o_kanban_card_header">
+                                <div class="o_kanban_card_header_title">
+                                    <span class="o_primary"><field name="name"/></span>
+                                    <span class="o_secondary"><field name="code"/></span>
+                                </div>
+                            </div>
+                            <div class="container o_kanban_card_content">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <span class="text-muted">Actuel</span>
+                                        <h3><field name="current_value"/> <field name="unit"/></h3>
+                                    </div>
+                                    <div class="col-6">
+                                        <span class="text-muted">Cible</span>
+                                        <h3><field name="target_value"/> <field name="unit"/></h3>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-12">
+                                        <field name="kpi_type" widget="badge"/>
+                                        <field name="status" widget="badge" 
+                                               decoration-success="status == 'good'"
+                                               decoration-warning="status == 'warning'"
+                                               decoration-danger="status == 'danger'"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- KPI Search View -->
+    <record id="view_pfe_kpi_search" model="ir.ui.view">
+        <field name="name">pfe.kpi.search</field>
+        <field name="model">pfe.kpi</field>
+        <field name="arch" type="xml">
+            <search string="Rechercher KPIs">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="project_id"/>
+                <separator/>
+                <filter string="Bon" name="good" domain="[('status', '=', 'good')]"/>
+                <filter string="Attention" name="warning" domain="[('status', '=', 'warning')]"/>
+                <filter string="Danger" name="danger" domain="[('status', '=', 'danger')]"/>
+                <separator/>
+                <filter string="Budget" name="budget" domain="[('kpi_type', '=', 'budget')]"/>
+                <filter string="Temps" name="time" domain="[('kpi_type', '=', 'time')]"/>
+                <filter string="Performance" name="performance" domain="[('kpi_type', '=', 'performance')]"/>
+                <separator/>
+                <group expand="0" string="Grouper par">
+                    <filter string="Type" name="group_type" context="{'group_by': 'kpi_type'}"/>
+                    <filter string="Projet" name="group_project" context="{'group_by': 'project_id'}"/>
+                    <filter string="Statut" name="group_status" context="{'group_by': 'status'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- KPI Graph View -->
+    <record id="view_pfe_kpi_graph" model="ir.ui.view">
+        <field name="name">pfe.kpi.graph</field>
+        <field name="model">pfe.kpi</field>
+        <field name="arch" type="xml">
+            <graph string="KPIs" type="bar">
+                <field name="name" type="row"/>
+                <field name="current_value" type="measure"/>
+                <field name="target_value" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- ==================== BUDGET VIEWS ==================== -->
+    
+    <!-- Budget Line Form View -->
+    <record id="view_pfe_budget_line_form" model="ir.ui.view">
+        <field name="name">pfe.budget.line.form</field>
+        <field name="model">pfe.budget.line</field>
+        <field name="arch" type="xml">
+            <form string="Ligne de Budget">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="project_id"/>
+                            <field name="category"/>
+                            <field name="date"/>
+                        </group>
+                        <group>
+                            <field name="amount_planned"/>
+                            <field name="amount_spent"/>
+                            <field name="amount_remaining"/>
+                            <field name="user_id"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="notes"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Budget Line Tree View -->
+    <record id="view_pfe_budget_line_tree" model="ir.ui.view">
+        <field name="name">pfe.budget.line.tree</field>
+        <field name="model">pfe.budget.line</field>
+        <field name="arch" type="xml">
+            <tree string="Lignes de Budget" decoration-danger="amount_remaining &lt; 0">
+                <field name="date"/>
+                <field name="project_id"/>
+                <field name="name"/>
+                <field name="category" widget="badge"/>
+                <field name="amount_planned" sum="Total Planifié"/>
+                <field name="amount_spent" sum="Total Dépensé"/>
+                <field name="amount_remaining" sum="Total Restant"/>
+                <field name="user_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Budget Line Search View -->
+    <record id="view_pfe_budget_line_search" model="ir.ui.view">
+        <field name="name">pfe.budget.line.search</field>
+        <field name="model">pfe.budget.line</field>
+        <field name="arch" type="xml">
+            <search string="Rechercher Budget">
+                <field name="name"/>
+                <field name="project_id"/>
+                <field name="category"/>
+                <separator/>
+                <filter string="Ce mois" name="this_month" 
+                        domain="[('date', '&gt;=', (context_today() - relativedelta(day=1)).strftime('%Y-%m-%d')),
+                                 ('date', '&lt;', (context_today() + relativedelta(months=1, day=1)).strftime('%Y-%m-%d'))]"/>
+                <separator/>
+                <group expand="0" string="Grouper par">
+                    <filter string="Projet" name="group_project" context="{'group_by': 'project_id'}"/>
+                    <filter string="Catégorie" name="group_category" context="{'group_by': 'category'}"/>
+                    <filter string="Date" name="group_date" context="{'group_by': 'date:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Budget Graph View -->
+    <record id="view_pfe_budget_line_graph" model="ir.ui.view">
+        <field name="name">pfe.budget.line.graph</field>
+        <field name="model">pfe.budget.line</field>
+        <field name="arch" type="xml">
+            <graph string="Budget par Catégorie" type="pie">
+                <field name="category" type="row"/>
+                <field name="amount_spent" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Budget Pivot View -->
+    <record id="view_pfe_budget_line_pivot" model="ir.ui.view">
+        <field name="name">pfe.budget.line.pivot</field>
+        <field name="model">pfe.budget.line</field>
+        <field name="arch" type="xml">
+            <pivot string="Analyse Budget">
+                <field name="project_id" type="row"/>
+                <field name="category" type="col"/>
+                <field name="amount_planned" type="measure"/>
+                <field name="amount_spent" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- ==================== KPI REPORT VIEWS ==================== -->
+    
+    <!-- KPI Report Tree View -->
+    <record id="view_pfe_kpi_report_tree" model="ir.ui.view">
+        <field name="name">pfe.kpi.report.tree</field>
+        <field name="model">pfe.kpi.report</field>
+        <field name="arch" type="xml">
+            <tree string="Rapport KPI" decoration-danger="is_delayed or is_budget_exceeded">
+                <field name="project_name"/>
+                <field name="manager_id"/>
+                <field name="department_id"/>
+                <field name="state" widget="badge"/>
+                <field name="budget_allocated"/>
+                <field name="budget_consumed"/>
+                <field name="budget_percentage" widget="progressbar"/>
+                <field name="progress" widget="progressbar"/>
+                <field name="task_count"/>
+                <field name="task_done_count"/>
+                <field name="date_start"/>
+                <field name="date_end"/>
+                <field name="is_delayed" column_invisible="True"/>
+                <field name="is_budget_exceeded" column_invisible="True"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- KPI Report Graph View -->
+    <record id="view_pfe_kpi_report_graph" model="ir.ui.view">
+        <field name="name">pfe.kpi.report.graph</field>
+        <field name="model">pfe.kpi.report</field>
+        <field name="arch" type="xml">
+            <graph string="Rapport Performance" type="bar">
+                <field name="project_name" type="row"/>
+                <field name="budget_percentage" type="measure"/>
+                <field name="progress" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- KPI Report Pivot View -->
+    <record id="view_pfe_kpi_report_pivot" model="ir.ui.view">
+        <field name="name">pfe.kpi.report.pivot</field>
+        <field name="model">pfe.kpi.report</field>
+        <field name="arch" type="xml">
+            <pivot string="Analyse Performance">
+                <field name="department_id" type="row"/>
+                <field name="state" type="col"/>
+                <field name="budget_allocated" type="measure"/>
+                <field name="budget_consumed" type="measure"/>
+                <field name="progress" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- KPI Report Search View -->
+    <record id="view_pfe_kpi_report_search" model="ir.ui.view">
+        <field name="name">pfe.kpi.report.search</field>
+        <field name="model">pfe.kpi.report</field>
+        <field name="arch" type="xml">
+            <search string="Rechercher Rapport">
+                <field name="project_name"/>
+                <field name="manager_id"/>
+                <field name="department_id"/>
+                <separator/>
+                <filter string="En Retard" name="delayed" domain="[('is_delayed', '=', True)]"/>
+                <filter string="Budget Dépassé" name="over_budget" domain="[('is_budget_exceeded', '=', True)]"/>
+                <separator/>
+                <group expand="0" string="Grouper par">
+                    <filter string="État" name="group_state" context="{'group_by': 'state'}"/>
+                    <filter string="Manager" name="group_manager" context="{'group_by': 'manager_id'}"/>
+                    <filter string="Département" name="group_department" context="{'group_by': 'department_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ==================== ACTIONS ==================== -->
+    
+    <!-- KPI Action -->
+    <record id="action_pfe_kpi" model="ir.actions.act_window">
+        <field name="name">KPIs</field>
+        <field name="res_model">pfe.kpi</field>
+        <field name="view_mode">kanban,tree,form,graph</field>
+        <field name="search_view_id" ref="view_pfe_kpi_search"/>
+    </record>
+
+    <!-- Budget Line Action -->
+    <record id="action_pfe_budget_line" model="ir.actions.act_window">
+        <field name="name">Lignes de Budget</field>
+        <field name="res_model">pfe.budget.line</field>
+        <field name="view_mode">tree,form,graph,pivot</field>
+        <field name="search_view_id" ref="view_pfe_budget_line_search"/>
+    </record>
+
+    <!-- KPI Report Action -->
+    <record id="action_pfe_kpi_report" model="ir.actions.act_window">
+        <field name="name">Rapport Performance</field>
+        <field name="res_model">pfe.kpi.report</field>
+        <field name="view_mode">tree,graph,pivot</field>
+        <field name="search_view_id" ref="view_pfe_kpi_report_search"/>
+    </record>
+
+</odoo>

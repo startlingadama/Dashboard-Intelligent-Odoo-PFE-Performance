@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_pfe_project_all,pfe.project.all,model_pfe_project,base.group_user,1,1,1,1
+access_pfe_task_all,pfe.task.all,model_pfe_task,base.group_user,1,1,1,1
+access_pfe_milestone_all,pfe.milestone.all,model_pfe_milestone,base.group_user,1,1,1,1
+access_pfe_timesheet_all,pfe.timesheet.all,model_pfe_timesheet,base.group_user,1,1,1,1
+access_pfe_kpi_all,pfe.kpi.all,model_pfe_kpi,base.group_user,1,1,1,1
+access_pfe_budget_line_all,pfe.budget.line.all,model_pfe_budget_line,base.group_user,1,1,1,1
+access_pfe_kpi_report_all,pfe.kpi.report.all,model_pfe_kpi_report,base.group_user,1,0,0,0
+access_pfe_budget_report_all,pfe.budget.report.all,model_pfe_budget_report,base.group_user,1,0,0,0

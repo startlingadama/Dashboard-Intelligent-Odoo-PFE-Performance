@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ==================== SECURITY GROUPS ==================== -->
+    
+    <record id="module_category_pfe" model="ir.module.category">
+        <field name="name">PFE Performance</field>
+        <field name="description">Catégorie pour la gestion des performances PFE</field>
+        <field name="sequence">100</field>
+    </record>
+
+    <!-- User Group -->
+    <record id="group_pfe_user" model="res.groups">
+        <field name="name">Utilisateur PFE</field>
+        <field name="category_id" ref="module_category_pfe"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        <field name="comment">Peut voir et modifier ses propres données PFE</field>
+    </record>
+
+    <!-- Manager Group -->
+    <record id="group_pfe_manager" model="res.groups">
+        <field name="name">Manager PFE</field>
+        <field name="category_id" ref="module_category_pfe"/>
+        <field name="implied_ids" eval="[(4, ref('group_pfe_user'))]"/>
+        <field name="comment">Peut gérer tous les projets et équipes PFE</field>
+    </record>
+
+    <!-- Admin Group -->
+    <record id="group_pfe_admin" model="res.groups">
+        <field name="name">Administrateur PFE</field>
+        <field name="category_id" ref="module_category_pfe"/>
+        <field name="implied_ids" eval="[(4, ref('group_pfe_manager'))]"/>
+        <field name="comment">Accès complet à toutes les fonctionnalités PFE</field>
+    </record>
+
+    <!-- ==================== RECORD RULES ==================== -->
+    
+    <!-- Règle: Les utilisateurs voient leurs propres projets ou ceux où ils sont dans l'équipe -->
+    <record id="rule_pfe_project_user" model="ir.rule">
+        <field name="name">Projets PFE: Utilisateur voit ses projets</field>
+        <field name="model_id" ref="model_pfe_project"/>
+        <field name="domain_force">[
+            '|', '|',
+            ('manager_id', '=', user.id),
+            ('team_ids', 'in', user.id),
+            ('create_uid', '=', user.id)
+        ]</field>
+        <field name="groups" eval="[(4, ref('group_pfe_user'))]"/>
+    </record>
+
+    <!-- Règle: Les managers voient tous les projets -->
+    <record id="rule_pfe_project_manager" model="ir.rule">
+        <field name="name">Projets PFE: Manager voit tout</field>
+        <field name="model_id" ref="model_pfe_project"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_pfe_manager'))]"/>
+    </record>
+
+    <!-- Règle: Tâches utilisateur -->
+    <record id="rule_pfe_task_user" model="ir.rule">
+        <field name="name">Tâches PFE: Utilisateur voit ses tâches</field>
+        <field name="model_id" ref="model_pfe_task"/>
+        <field name="domain_force">[
+            '|',
+            ('user_id', '=', user.id),
+            ('project_id.team_ids', 'in', user.id)
+        ]</field>
+        <field name="groups" eval="[(4, ref('group_pfe_user'))]"/>
+    </record>
+
+    <!-- Règle: Tâches manager -->
+    <record id="rule_pfe_task_manager" model="ir.rule">
+        <field name="name">Tâches PFE: Manager voit tout</field>
+        <field name="model_id" ref="model_pfe_task"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_pfe_manager'))]"/>
+    </record>
+
+</odoo>

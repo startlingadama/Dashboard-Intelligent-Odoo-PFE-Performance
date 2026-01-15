@@ -1,0 +1,172 @@
+/* Dashboard CSS for PFE Performance Module */
+
+.o_pfe_dashboard {
+    background-color: #f8f9fa;
+}
+
+.o_pfe_dashboard .o_kanban_card {
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease;
+}
+
+.o_pfe_dashboard .o_kanban_card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+/* Status colors */
+.o_pfe_status_good {
+    color: #28a745;
+}
+
+.o_pfe_status_warning {
+    color: #ffc107;
+}
+
+.o_pfe_status_danger {
+    color: #dc3545;
+}
+
+/* Progress bar customization */
+.o_pfe_progress {
+    height: 8px;
+    border-radius: 4px;
+    background-color: #e9ecef;
+}
+
+.o_pfe_progress_bar {
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+/* KPI Cards */
+.o_pfe_kpi_card {
+    padding: 15px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.o_pfe_kpi_card.good {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+}
+
+.o_pfe_kpi_card.warning {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.o_pfe_kpi_card.danger {
+    background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
+}
+
+/* Alert badges */
+.o_pfe_alert_badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.o_pfe_alert_badge.delayed {
+    background-color: #dc3545;
+    color: white;
+}
+
+.o_pfe_alert_badge.over_budget {
+    background-color: #ffc107;
+    color: #212529;
+}
+
+/* Task priority styling */
+.o_pfe_task_critical {
+    border-left: 4px solid #dc3545 !important;
+}
+
+/* Kanban column headers */
+.o_kanban_group_header {
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Stat buttons */
+.o_pfe_stat_button {
+    min-width: 100px;
+}
+
+.o_pfe_stat_button .o_stat_value {
+    font-size: 24px;
+    font-weight: 700;
+    color: #495057;
+}
+
+/* Dashboard widgets */
+.o_pfe_widget {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 15px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+.o_pfe_widget_title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #6c757d;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.o_pfe_widget_value {
+    font-size: 32px;
+    font-weight: 700;
+    color: #212529;
+}
+
+/* Timeline styling for milestones */
+.o_pfe_timeline {
+    position: relative;
+    padding-left: 30px;
+}
+
+.o_pfe_timeline::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background-color: #dee2e6;
+}
+
+.o_pfe_timeline_item {
+    position: relative;
+    padding-bottom: 20px;
+}
+
+.o_pfe_timeline_item::before {
+    content: '';
+    position: absolute;
+    left: -24px;
+    top: 5px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #007bff;
+    border: 2px solid white;
+}
+
+.o_pfe_timeline_item.achieved::before {
+    background-color: #28a745;
+}
+
+.o_pfe_timeline_item.missed::before {
+    background-color: #dc3545;
+}
+
+.o_pfe_timeline_item.overdue::before {
+    background-color: #ffc107;
+}
